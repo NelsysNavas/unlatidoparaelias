@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Corazón para Elías | Campaña de Recaudación</title>
+    
+    <!-- Favicon SVG Local -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    
+    <!-- Meta Tags para Redes Sociales -->
+    <meta property="og:title" content="Un Corazón para Elías: Ayúdanos a salvar su vida">
+    <meta property="og:description" content="Elías necesita un cateterismo terapéutico urgente tras sufrir un colapso cardíaco. Tu donación hace la diferencia.">
+    <meta property="og:image" content="images/documento-1.png">
+    <meta property="og:type" content="website">
+
+    <!-- Scripts Externos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500&display=swap');
+        
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: #1e293b;
+            --accent-red: #dc2626;
+            --accent-green: #00a86b;
+            --accent-yellow: #f3ba2f;
+            --text-main: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+        }
+        
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+
+        .hero-section {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 1)), url('images/imagen_hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-donate {
+            background-color: var(--accent-red);
+            transition: all 0.3s ease;
+        }
+
+        .btn-donate:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        /* Estilos Galería */
+        .doc-card {
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            background: #1e293b;
+        }
+        .doc-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-5px);
+        }
+        .doc-card::after {
+            content: "\f00e";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            inset: 0;
+            background: rgba(220, 38, 38, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.3s;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .doc-card:hover::after { opacity: 1; }
+
+        /* Modal / Lightbox */
+        .modal { transition: opacity 0.3s ease; visibility: hidden; opacity: 0; pointer-events: none; }
+        .modal.active { visibility: visible; opacity: 1; pointer-events: auto; }
+        body.modal-active { overflow: hidden; }
+
+        .pulse-icon { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); }
+        }
+
+        .logo-container {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Botón Back to Top */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-red);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="selection:bg-red-500/30">
+
+    <!-- Header -->
+    <header class="fixed w-full bg-slate-900/80 backdrop-blur-lg z-50 border-b border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-heart-pulse text-red-500 text-2xl pulse-icon"></i>
+                <span class="font-bold text-white text-lg uppercase tracking-wider hidden sm:block">Elías Kienzler</span>
+            </div>
+            <a href="#donar" class="btn-donate text-white px-5 py-2 rounded-lg font-bold text-[10px] uppercase tracking-widest shadow-lg">Donar Ahora</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section text-center px-4">
+        <div class="max-w-4xl mx-auto relative z-10 pt-20">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-red-950/40 border border-red-500/30 rounded-full text-red-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-8">
+                <span>Urgencia Cardiovascular</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black mb-6 leading-none uppercase tracking-tighter text-white">
+                UN LATIDO DE <br><span class="text-red-600">ESPERANZA</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto font-medium">
+                Ayúdanos a devolverle la salud a Elías. Tu generosidad es su camino a la recuperación.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#donar" class="btn-donate text-white px-8 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl">Quiero Ayudar</a>
+                <a href="#docs" class="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] transition">Ver Informes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería de Documentos -->
+    <section id="docs" class="py-20 px-4 bg-slate-950">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white uppercase tracking-tighter">Evidencia Médica</h2>
+                <p class="text-slate-500 text-sm mt-2 font-light italic">Haz clic en las imágenes para ver informes y fotos.</p>
+            </div>
+
+            <div id="document-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Documento 1 al 13 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Canales de Donación -->
+    <section id="donar" class="py-24 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white uppercase tracking-tighter">Cómo puedes colaborar</h2>
+                <div class="w-16 h-1 bg-red-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pago Móvil -->
+                <div class="bg-slate-800/40 border border-slate-700/50 rounded-3xl p-8 hover:border-red-500/30 transition-all flex flex-col items-center text-center">
+                    <div class="logo-container">
+                        <span class="text-red-500 font-black italic text-2xl tracking-tighter uppercase">Pago Móvil</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 text-center">Bolívares (Bs.)</h3>
+                    <p class="text-slate-400 text-xs mb-8 flex-grow">Para donaciones locales en Venezuela.</p>
+                    <button onclick="toggleModal('modal-pago')" class="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest">Ver Datos</button>
+                </div>
+
+                <!-- GoFundMe -->
+                <div class="bg-slate-800/40 border border-slate-700/50 rounded-3xl p-8 hover:border-green-500/30 transition-all flex flex-col items-center text-center border-2 border-green-500/20">
+                    <div class="logo-container">
+                        <i class="fas fa-hand-holding-heart text-green-500 text-3xl"></i>
+                        <span class="ml-2 text-green-500 font-bold text-xl tracking-tight uppercase">GoFundMe</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 text-center">Internacional ($)</h3>
+                    <p class="text-slate-400 text-xs mb-8 flex-grow">Canal principal para aportes desde el exterior.</p>
+                    <a href="https://www.gofundme.com/f/un-corazon-para-elias-ayudanos-a-costear-su-cateterismo-urg" target="_blank" class="block w-full py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-center font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-green-900/20">Donar Ahora</a>
+                </div>
+
+                <!-- Binance -->
+                <div class="bg-slate-800/40 border border-slate-700/50 rounded-3xl p-8 hover:border-yellow-500/30 transition-all flex flex-col items-center text-center">
+                    <div class="logo-container">
+                        <i class="fab fa-bitcoin text-yellow-500 text-3xl"></i>
+                        <span class="ml-2 text-yellow-500 font-bold text-xl tracking-tight uppercase">Binance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 text-center">Criptomonedas</h3>
+                    <p class="text-slate-400 text-xs mb-8 flex-grow">Binance Pay (USDT) para transferencias rápidas.</p>
+                    <button onclick="toggleModal('modal-binance')" class="w-full py-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest">Ver Binance ID</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-16 text-center border-t border-slate-900">
+        <div class="max-w-2xl mx-auto px-4">
+            <p class="text-slate-400 text-sm font-light italic mb-8">
+                "Cualquier aporte nos acerca un paso más a la sanación de mi padre."
+            </p>
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.5em] mb-4">#UnCorazonParaElias</p>
+            <p class="text-slate-700 text-[10px] uppercase tracking-widest">Acarigua, Venezuela &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- Botón Back to Top -->
+    <div id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- MODALES -->
+    <div id="modal-pago" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="toggleModal('modal-pago')"></div>
+        <div class="relative bg-slate-900 w-full max-w-sm rounded-3xl border border-slate-800 p-8 shadow-2xl text-center">
+            <h3 class="text-red-500 font-bold uppercase tracking-widest mb-6">Datos Pago Móvil</h3>
+            <div class="space-y-4 text-sm">
+                <p class="text-slate-400">Banco: <span class="text-white font-bold">Mercantil (0105)</span></p>
+                <p class="text-slate-400">Cédula: <span class="text-white font-bold">V-11.455.514</span></p>
+                <p class="text-slate-400">Teléfono: <span class="text-white font-bold">0412-2511477</span></p>
+            </div>
+            <button onclick="toggleModal('modal-pago')" class="w-full mt-8 py-3 bg-slate-800 text-white rounded-xl font-bold uppercase text-[10px] tracking-widest">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="modal-binance" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="toggleModal('modal-binance')"></div>
+        <div class="relative bg-slate-900 w-full max-w-sm rounded-3xl border border-slate-800 p-8 shadow-2xl text-center">
+            <h3 class="text-yellow-500 font-bold uppercase tracking-widest mb-6">Binance Pay</h3>
+            <p class="text-slate-500 text-[10px] uppercase tracking-widest mb-2">Binance ID</p>
+            <p class="text-white font-black text-2xl mb-4">210674686</p>
+            <p class="text-slate-500 text-[10px] uppercase tracking-widest mb-2">Correo</p>
+            <p class="text-white font-bold text-sm mb-6 uppercase">nelsysnavas@gmail.com</p>
+            <button onclick="toggleModal('modal-binance')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold uppercase text-[10px] tracking-widest">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="modal fixed inset-0 z-[200] flex items-center justify-center p-2" onclick="closeLightbox()">
+        <div class="absolute inset-0 bg-black/98 backdrop-blur-2xl"></div>
+        <div class="relative max-w-5xl max-h-[90vh]">
+            <img id="lightbox-img" src="" class="rounded-lg shadow-2xl object-contain w-full h-full border border-slate-800" alt="Documento Ampliado">
+            <div class="absolute -top-12 right-0 text-white text-3xl cursor-pointer hover:text-red-500 transition">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cargar galería dinámicamente
+        const grid = document.getElementById('document-grid');
+        for (let i = 1; i <= 13; i++) {
+            const card = document.createElement('div');
+            card.className = "doc-card aspect-[3/4] rounded-xl overflow-hidden shadow-lg";
+            card.onclick = () => openLightbox(`images/documento-${i}.png`);
+            
+            card.innerHTML = `
+                <img src="images/documento-${i}.png" class="w-full h-full object-cover" alt="Documento ${i}" onerror="this.src='https://placehold.co/300x400/1e293b/white?text=Doc+${i}'">
+                <div class="absolute bottom-0 w-full bg-black/60 p-2 text-[8px] text-white font-bold uppercase tracking-widest text-center">Documento ${i}</div>
+            `;
+            grid.appendChild(card);
+        }
+
+        // Funciones de UI
+        function toggleModal(id) {
+            const el = document.getElementById(id);
+            if(el.classList.contains('active')) {
+                el.classList.remove('active');
+                document.body.classList.remove('modal-active');
+            } else {
+                el.classList.add('active');
+                document.body.classList.add('modal-active');
+            }
+        }
+
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+            document.body.classList.add('modal-active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.classList.remove('modal-active');
+        }
+
+        // Control del botón Back to Top
+        window.onscroll = function() {
+            const btn = document.getElementById('back-to-top');
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        };
+    </script>
+</body>
+</html>
