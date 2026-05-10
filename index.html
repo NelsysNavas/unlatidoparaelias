@@ -228,9 +228,10 @@
                 <p class="text-slate-400 mt-6 text-sm">Haz clic abajo para reproducir el testimonio de Elías directamente en YouTube.</p>
             </div>
             
-            <!-- Miniatura de YouTube vinculada -->
-            <a href="https://www.youtube.com/watch?v=0fkKbyCMzfI" target="_blank" class="video-wrapper block">
+            <!-- Video con miniatura que se convierte en reproductor al hacer clic -->
+            <div class="video-wrapper" id="video-container" onclick="playVideo()" style="cursor:pointer;">
                 <img 
+                    id="video-thumb"
                     src="https://img.youtube.com/vi/0fkKbyCMzfI/maxresdefault.jpg" 
                     alt="Miniatura Video Elías" 
                     class="video-thumbnail"
@@ -248,16 +249,27 @@
                         }
                     "
                 >
-                <div class="play-button-overlay">
+                <div class="play-button-overlay" id="play-overlay">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
                     </div>
                 </div>
                 <div class="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white drop-shadow-lg pointer-events-none">
                     <span class="font-bold uppercase tracking-widest text-xs bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">YouTube Video</span>
-                    <span class="text-[10px] opacity-80 uppercase tracking-widest">Abrir en YouTube <i class="fas fa-external-link-alt ml-2"></i></span>
+                    <span class="text-[10px] opacity-80 uppercase tracking-widest">Clic para reproducir <i class="fas fa-play ml-2"></i></span>
                 </div>
-            </a>
+            </div>
+            <script>
+                function playVideo() {
+                    const container = document.getElementById('video-container');
+                    container.onclick = null;
+                    container.style.cursor = 'default';
+                    container.innerHTML = '<iframe width="100%" height="100%" style="position:absolute;inset:0;width:100%;height:100%;" src="https://www.youtube.com/embed/0fkKbyCMzfI?autoplay=1&rel=0" title="Un latido de esperanza para Elías" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+                    container.style.position = 'relative';
+                    container.style.paddingBottom = '56.25%';
+                    container.style.height = '0';
+                }
+            </script>
         </div>
     </section>
 
